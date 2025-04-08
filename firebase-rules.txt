@@ -1,0 +1,13 @@
+// Realtime Database Rules
+{
+  "rules": {
+    "documents": {
+      "$documentId": {
+        // Allow read and write to any document with a valid ID
+        ".read": true,
+        ".write": true
+      }
+    }
+  }
+}
+
