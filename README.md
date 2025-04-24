@@ -122,5 +122,5 @@ TextCollab is a fast, modern, and responsive tool for collaborative document edi
 
 ---
 
-> Built with ❤️ by Jaydeep
+
 
