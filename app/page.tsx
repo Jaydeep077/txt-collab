@@ -10,6 +10,7 @@ export default function Home() {
         <div className="container flex items-center justify-between h-16 px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <span className="text-xl font-bold">TextCollab</span>
+            <span></span>
           </Link>
           <div className="flex items-center gap-4">
             <ThemeToggle />
@@ -34,6 +35,7 @@ export default function Home() {
                   TextCollab lets you create and share text documents with your team. Edit together in real-time with a
                   simple, clean interface.
                 </p>
+                
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Link href="/new">
                     <Button size="lg">
@@ -155,6 +157,7 @@ export default function Home() {
           <p className="text-center text-sm leading-loose text-gray-500 md:text-left">
             @2025 (TensorFlow07)
           </p>
+          <p>Github:-https://github.com/Jaydeep077/txt-collab</p>
         </div>
       </footer>
     </div>
