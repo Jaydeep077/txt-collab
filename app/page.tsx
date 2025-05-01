@@ -157,7 +157,10 @@ export default function Home() {
           <p className="text-center text-sm leading-loose text-gray-500 md:text-left">
             @2025 (TensorFlow07)
           </p>
-          <p>Github:-https://github.com/Jaydeep077/txt-collab</p>
+           <p className="text-center text-sm leading-loose text-gray-500 md:text-left">
+            Contribute:<a href="https://github.com/Jaydeep077/txt-collab">Github</a>
+          </p>
+         
         </div>
       </footer>
     </div>
