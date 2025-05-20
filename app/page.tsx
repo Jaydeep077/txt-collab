@@ -159,10 +159,10 @@ export default function Home() {
           </p>
            <p className="text-center text-sm leading-loose text-gray-500 md:text-left">
             
-         Contribute: <a href="https://github.com/Jaydeep077/txt-collab" target="_blank">
-  <i class="fab fa-github"></i> GitHub
+        <a href="https://github.com/Jaydeep077/txt-collab" target="_blank">
+   GitHub
 </a>
-
+</p>
         </div>
       </footer>
     </div>
