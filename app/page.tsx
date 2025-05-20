@@ -155,12 +155,14 @@ export default function Home() {
       <footer className="border-t py-6 md:py-0">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
           <p className="text-center text-sm leading-loose text-gray-500 md:text-left">
-            @2025 (TensorFlow07)
+            @2518(TensorFlow07)
           </p>
            <p className="text-center text-sm leading-loose text-gray-500 md:text-left">
-            Contribute:<a href="https://github.com/Jaydeep077/txt-collab">Github</a>
-          </p>
-         
+            
+         Contribute: <a href="https://github.com/Jaydeep077/txt-collab" target="_blank">
+  <i class="fab fa-github"></i> GitHub
+</a>
+
         </div>
       </footer>
     </div>
