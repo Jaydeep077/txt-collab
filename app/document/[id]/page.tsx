@@ -17,7 +17,7 @@ import { useMobile } from "@/hooks/use-mobile"
 import { MobileMenu } from "./mobile-menu"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { toast } from "sonner"
-// No change needed here, the import is correct
+
 
 export default function DocumentPage() {
   const router = useRouter()
@@ -250,6 +250,16 @@ export default function DocumentPage() {
       description: "All content has been cleared.",
     })
   }
+   
+ const handleVoiceText = (voiceText: string) => {
+  if (!voiceText || voiceText.trim() === "") {
+      toast.error("No voice input detected", {
+        description: "Please speak something to convert to text.",
+      })
+      return
+    }
+    console.log("Voice text received:", voiceText)
+  }
 
   if (isLoading) {
     return (
@@ -354,12 +364,17 @@ export default function DocumentPage() {
         onSave={forceSave}
       />
 
-      {error && (
+    {error && (
         <Alert variant="destructive" className="m-4">
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>
             {error}
-            <Button variant="outline" size="sm" className="mt-2" onClick={() => window.location.reload()}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-2 bg-transparent"
+              onClick={() => window.location.reload()}
+            >
               Try Again
             </Button>
           </AlertDescription>
@@ -383,7 +398,7 @@ export default function DocumentPage() {
       )}
 
       <div className="flex-1 overflow-hidden">
-        <SimpleEditor value={content} onChange={handleContentChange} />
+        <SimpleEditor value={content} onChange={handleContentChange} onVoiceText={handleVoiceText} />
       </div>
     </div>
   )

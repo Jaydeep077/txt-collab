@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
-import { Download, Share, Save, Plus, X, Wifi, WifiOff } from "lucide-react"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { Download, Share, Save, Plus, X, Wifi, WifiOff, Mic } from "lucide-react"
 
 interface MobileMenuProps {
   isOpen: boolean
@@ -18,6 +17,7 @@ interface MobileMenuProps {
   onDownload: () => void
   onClear: () => void
   onSave: () => void
+  onVoiceToText?: () => void
 }
 
 export function MobileMenu({
@@ -33,6 +33,7 @@ export function MobileMenu({
   onDownload,
   onClear,
   onSave,
+  onVoiceToText,
 }: MobileMenuProps) {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -45,10 +46,6 @@ export function MobileMenu({
             </Button>
           </div>
           <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium">Theme</span>
-              <ThemeToggle />
-            </div>
             <Button
               onClick={() => {
                 onNewDocument()
@@ -99,6 +96,18 @@ export function MobileMenu({
               <Save className="h-4 w-4 mr-2" />
               Save Now
             </Button>
+            {onVoiceToText && (
+              <Button
+                onClick={() => {
+                  onVoiceToText()
+                  setIsOpen(false)
+                }}
+                className="justify-start"
+              >
+                <Mic className="h-4 w-4 mr-2" />
+                Voice to Text
+              </Button>
+            )}
           </div>
           <div className="mt-auto pt-4 border-t">
             <div className="text-xs text-muted-foreground mb-2">Document ID: {documentId}</div>
@@ -119,4 +128,3 @@ export function MobileMenu({
     </Sheet>
   )
 }
-
