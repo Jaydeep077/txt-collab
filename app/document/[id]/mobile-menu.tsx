@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { Download, Share, Save, Plus, X, Wifi, WifiOff, Mic } from "lucide-react"
 
+import { ThemeToggle } from "@/components/theme-toggle"
 interface MobileMenuProps {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
@@ -46,6 +47,10 @@ export function MobileMenu({
             </Button>
           </div>
           <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium">Theme</span>
+              <ThemeToggle />
+            </div>
             <Button
               onClick={() => {
                 onNewDocument()
