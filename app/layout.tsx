@@ -12,7 +12,7 @@ export const metadata = {
   generator: "v0.dev",
 }
 
-// ✅ Define props type
+
 type RootLayoutProps = {
   children: ReactNode
 }
