@@ -116,6 +116,44 @@ TextCollab is a real-time collaborative text editor designed to make document ed
 
 ---
 
+## 💻 Local Development
+
+To run TextCollab locally, follow these steps:
+
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/txt-collab.git
+    cd txt-collab
+    ```
+
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+
+3.  **Set up environment variables**:
+    - Create a `.env.local` file by copying the example:
+      ```bash
+      cp .env.example .env.local
+      ```
+    - Open `.env.local` and fill in your Firebase project credentials for both production and development.
+
+4.  **Run the development server**:
+    ```bash
+    npm run dev
+    ```
+
+5.  Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+### Using the Firebase Emulator
+
+By default, the app is configured to use the Firebase Emulator for local development.
+
+- To **disable the emulator**, set `NEXT_PUBLIC_USE_FIREBASE_EMULATOR` to `false` in your `.env.local` file.
+- To **change the emulator host and port**, modify `NEXT_PUBLIC_FIREBASE_EMULATOR_HOST` and `NEXT_PUBLIC_FIREBASE_EMULATOR_PORT`.
+
+---
+
 ## 📌 Final Thoughts
 
 TextCollab is a fast, modern, and responsive tool for collaborative document editing. Whether you're online or offline, on desktop or mobile, it ensures your writing experience is fluid and accessible.

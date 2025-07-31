@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"firebase emulators:start --only database\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -65,6 +65,7 @@
     "@types/node": "^22.14.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19",
+    "concurrently": "^9.2.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3"
