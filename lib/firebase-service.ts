@@ -1,16 +1,18 @@
+//import dotenv from 'dotenv'
+//dotenv.config();
 import { initializeApp } from "firebase/app"
 import { getDatabase, ref, onValue, set, get, push, Database } from "firebase/database"
 
 // Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDADDhdZBPF-DVDUMwG4_qYB7LiWIdBgR0",
-  authDomain: "textcollab-b9912.firebaseapp.com",
-  projectId: "textcollab-b9912",
-  storageBucket: "textcollab-b9912.firebasestorage.app",
-  messagingSenderId: "1066351486838",
-  appId: "1:1066351486838:web:c9e2932cbfb863c5943c57",
-  measurementId: "G-VVEF96ECJD",
-  databaseURL: "https://textcollab-b9912-default-rtdb.asia-southeast1.firebasedatabase.app",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId:  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket:  process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId:  process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId:  process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId:  process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  databaseURL:  process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
 }
 
 // Initialize Firebase
