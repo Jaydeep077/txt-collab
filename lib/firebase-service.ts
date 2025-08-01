@@ -246,7 +246,6 @@ export async function createNewDocument() {
       return null
     }
 
-    return newId
   } catch (error) {
     console.error("Error creating new document:", error)
     return null
