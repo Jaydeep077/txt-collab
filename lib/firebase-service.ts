@@ -1,7 +1,7 @@
 //import dotenv from 'dotenv'
 //dotenv.config();
 import { initializeApp } from "firebase/app"
-import { getDatabase, ref, onValue, set, get, push, Database } from "firebase/database"
+import { getDatabase, ref, onValue, set, get, push, Database, connectDatabaseEmulator } from "firebase/database"
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -12,18 +12,30 @@ const firebaseConfig = {
   messagingSenderId:  process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId:  process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId:  process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
-  databaseURL:  process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+  databaseURL: process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR === 'true'
+      ? `http://${process.env.NEXT_PUBLIC_FIREBASE_EMULATOR_HOST || 'localhost'}:${process.env.NEXT_PUBLIC_FIREBASE_EMULATOR_PORT || '9000'}?ns=${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}`
+      : (process.env.NODE_ENV === 'development'
+        ? process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL_DEV
+        : process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL),
 }
 
 // Initialize Firebase
-let app
-let database: Database
+const app = initializeApp(firebaseConfig)
+const database: Database = getDatabase(app)
 
 // Initialize Firebase only on the client side
 if (typeof window !== "undefined") {
   try {
-    app = initializeApp(firebaseConfig)
-    database = getDatabase(app)
+    // Development environment specific logic
+    if (process.env.NODE_ENV === 'development') {
+      // If USE_FIREBASE_EMULATOR is true, connect to the emulator
+      if (process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR === 'true') {
+        const dbHost = process.env.NEXT_PUBLIC_FIREBASE_EMULATOR_HOST || 'localhost';
+        const dbPort = process.env.NEXT_PUBLIC_FIREBASE_EMULATOR_PORT ? parseInt(process.env.NEXT_PUBLIC_FIREBASE_EMULATOR_PORT) : 9000;
+        console.log(`Connecting to Firebase Emulator at ${dbHost}:${dbPort}`);
+        connectDatabaseEmulator(database, dbHost, dbPort);
+      }
+    }
     console.log("Firebase initialized successfully")
   } catch (error) {
     console.error("Error initializing Firebase:", error)
@@ -211,20 +223,28 @@ export async function createNewDocument() {
   if (typeof window === "undefined") return null
 
   try {
-    // Generate a new document ID
-    const docsRef = ref(database, "documents")
-    const newDocRef = push(docsRef)
-    const newId = newDocRef.key
+    try {
+      // Generate a new document ID
+      console.log("Attempting to get docsRef...");
+      const docsRef = ref(database, "documents")
+      console.log("docsRef obtained. Attempting to push newDocRef...");
+      const newDocRef = push(docsRef)
+      const newId = newDocRef.key
+      console.log(`newDocRef pushed, newId: ${newId}. Attempting to set newDoc...`);
 
-    // Create the document
-    const newDoc = {
-      content: "Start typing here...\n\nShare this link with others to collaborate in real-time.",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      // Create the document
+      const newDoc = {
+        content: "Initial content"
+      }
+
+      await set(newDocRef, newDoc)
+      console.log("newDoc set successfully. Returning newId.");
+
+      return newId
+    } catch (error) {
+      console.error("Error in createNewDocument Firebase operations:", error)
+      return null
     }
-
-    await set(newDocRef, newDoc)
-    localStorage.setItem(`document_${newId}`, JSON.stringify(newDoc))
 
     return newId
   } catch (error) {
