@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import { ReactNode } from "react"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "sonner"
+import { TypingAppBanner } from "@/components/typing-app-banner"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <TypingAppBanner />
           {children}
           <Toaster position="top-right" closeButton richColors />
         </ThemeProvider>
