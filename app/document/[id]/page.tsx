@@ -11,6 +11,8 @@ import {
   subscribeToDocument,
   listenToOnlineStatus,
   isOnline,
+  subscribeToPresence,
+  type PresenceUser,
 } from "@/lib/firebase-service"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useMobile } from "@/hooks/use-mobile"
@@ -31,6 +33,7 @@ export default function DocumentPage() {
   const [error, setError] = useState<string | null>(null)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
   const [isConnected, setIsConnected] = useState(true)
+  const [activeCollaborators, setActiveCollaborators] = useState<PresenceUser[]>([])
   const [offlineMode, setOfflineMode] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -39,6 +42,20 @@ export default function DocumentPage() {
   const lastChangeRef = useRef(Date.now())
   const isUpdatingRef = useRef(false)
   const isMobile = useMobile()
+
+  // Show guest collaborators currently viewing this document.
+  useEffect(() => {
+    if (!documentId) return
+
+    const storageKey = `textcollab_guest_name_${documentId}`
+    let displayName = sessionStorage.getItem(storageKey)
+    if (!displayName) {
+      displayName = `Guest-${Math.random().toString(36).slice(2, 6).toUpperCase()}`
+      sessionStorage.setItem(storageKey, displayName)
+    }
+
+    return subscribeToPresence(documentId, displayName, setActiveCollaborators)
+  }, [documentId])
 
   // Listen for online/offline status
   useEffect(() => {
@@ -285,6 +302,9 @@ export default function DocumentPage() {
         ) : lastSaved ? (
           <div className="text-xs text-muted-foreground">Last saved: {lastSaved.toLocaleTimeString()}</div>
         ) : null}
+        <div className="text-xs text-muted-foreground hidden md:block" title={activeCollaborators.map((user) => user.displayName).join(", ")}>
+          {activeCollaborators.length} here{activeCollaborators.length > 0 ? ` · ${activeCollaborators.slice(0, 3).map((user) => user.displayName).join(", ")}${activeCollaborators.length > 3 ? "…" : ""}` : ""}
+        </div>
         <div className="text-xs flex items-center">
           {isConnected ? (
             <Wifi className="h-3 w-3 text-green-500 mr-1" />
